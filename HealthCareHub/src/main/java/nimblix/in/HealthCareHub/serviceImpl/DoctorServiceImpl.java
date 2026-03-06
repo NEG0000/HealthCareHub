@@ -18,6 +18,8 @@ import nimblix.in.HealthCareHub.model.Specialization;
 import nimblix.in.HealthCareHub.repository.HospitalRepository;
 import nimblix.in.HealthCareHub.repository.SpecializationRepository;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 
 @Service
 @RequiredArgsConstructor
@@ -28,11 +30,11 @@ public class DoctorServiceImpl implements DoctorService {
     private final SpecializationRepository specializationRepository;
 
     @Override
-    public String registerDoctor(DoctorRegistrationRequest request) {
+    public ResponseEntity<String> registerDoctor(DoctorRegistrationRequest request) {
      try {
          // Check if email already exists
          if (doctorRepository.findByEmailId(request.getDoctorEmail()).isPresent()) {
-             return "Doctor already exists with this email";
+             return ResponseEntity.badRequest().body("Doctor already exists");
          }
 
          // Fetch Hospital
@@ -61,9 +63,9 @@ public class DoctorServiceImpl implements DoctorService {
 
          doctorRepository.save(doctor);
 
-         return "Doctor Registered Successfully";
+         return ResponseEntity.ok("Doctor Registered Successfully");
       }catch (UserNotFoundException e){
-         return  "User not found";
+         return ResponseEntity.badRequest().body("User not found");
      }
     }
 

@@ -4,14 +4,10 @@ import lombok.RequiredArgsConstructor;
 import nimblix.in.HealthCareHub.request.DoctorRegistrationRequest;
 import nimblix.in.HealthCareHub.response.DoctorProfileResponse;
 import nimblix.in.HealthCareHub.service.DoctorService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.PublicKey;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -24,7 +20,7 @@ public class DoctorController {
     private final DoctorService doctorService;
 
     @PostMapping("/register")
-    public String registerDoctor(@RequestBody DoctorRegistrationRequest request) {
+    public ResponseEntity<String> registerDoctor(@RequestBody DoctorRegistrationRequest request) {
         return doctorService.registerDoctor(request);
 
     }
